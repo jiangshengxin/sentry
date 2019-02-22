@@ -1363,3 +1363,10 @@ class SnubaSearchBackendWithSearchFiltersTest(SnubaSearchTest):
             having=[['first_seen', '>=', Any(int)]],
             **common_args
         )
+
+    def test_query_enclosed_in_quotes(self):
+        results = self.make_query(search_filter_query='"foo"', query='"foo"')
+        assert set(results) == set([self.group1])
+
+        results = self.make_query(search_filter_query='"bar"', query='"bar"')
+        assert set(results) == set([self.group2])
